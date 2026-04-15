@@ -532,70 +532,6 @@ body.toolbar-autohide:not(.is-app) .labels-visible .panel-label {
 }
 .modal-btn-primary:hover { background: #5a9aff; }
 .modal-btn-primary:disabled { opacity: .5; pointer-events: none; }
-.modal-link-box {
-  display: none; margin-top: 1rem; padding: .6rem .8rem;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  border-radius: 8px;
-}
-.modal-link-box.show { display: block; }
-.modal-link-url {
-  width: 100%; background: none; border: none; color: #fff;
-  font-size: .78rem; font-family: 'SF Mono', monospace; outline: none;
-  word-break: break-all;
-}
-.modal-link-copied {
-  font-size: .7rem; color: rgba(75,200,120,.9); margin-top: .4rem;
-}
-.modal-embed-code {
-  position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
-}
-.share-extra-row {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-top: .8rem; margin-bottom: .5rem;
-}
-.share-extra-item {
-  font-size: .78rem; color: rgba(255,255,255,.45); display: flex; align-items: center; gap: .3rem;
-}
-.share-extra-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.5); width: 28px; height: 28px; border-radius: 6px;
-  cursor: pointer; transition: background .15s, color .15s;
-}
-.share-extra-btn:hover { background: rgba(255,255,255,.15); color: rgba(255,255,255,.8); }
-.share-extra-btn.copied { background: rgba(75,200,120,.15); color: rgba(75,200,120,.9); }
-.share-extra-link {
-  color: rgba(255,255,255,.45); text-decoration: none; display: flex; align-items: center; gap: .3rem;
-}
-.share-extra-link:hover { color: rgba(255,255,255,.6); }
-.share-extra-link:hover .share-extra-btn { background: rgba(255,255,255,.15); color: rgba(255,255,255,.8); }
-
-/* ── Share expiry toggle ─────────────────────────────────── */
-.share-expiry-toggle {
-  display: flex; align-items: center; gap: .7rem;
-  margin: -.4rem 0 1rem; font-size: .78rem; color: rgba(255,255,255,.55);
-}
-.share-expiry-options {
-  display: flex; background: rgba(255,255,255,.06); border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.1); overflow: hidden;
-}
-.share-expiry-opt {
-  padding: .35rem .8rem; border: none; background: none; color: rgba(255,255,255,.5);
-  font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .15s;
-}
-.share-expiry-opt.active {
-  background: var(--accent, #4b8cff); color: #fff;
-}
-.share-expiry-opt:not(.active):hover {
-  background: rgba(255,255,255,.08);
-}
-.share-expiry-hint {
-  margin: -.6rem 0 1rem; font-size: .72rem; color: rgba(255,200,60,.8); line-height: 1.4;
-}
-.share-expiry-hint a, #shareMsgSignIn {
-  color: var(--accent, #4b8cff); cursor: pointer; text-decoration: underline;
-}
-
 /* ── Profile modal ───────────────────────────────────────── */
 .profile-header {
   display: flex; align-items: baseline; gap: .6rem; margin-bottom: 1rem;
@@ -615,68 +551,9 @@ body.toolbar-autohide:not(.is-app) .labels-visible .panel-label {
   letter-spacing: .02em;
 }
 .profile-patron.hidden { display: none; }
-.profile-shares {
-  max-height: 400px; overflow-y: auto; margin: 0 -.5rem; padding: 0 .5rem;
-}
-.profile-shares::-webkit-scrollbar { width: 4px; }
-.profile-shares::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
-.profile-share-item {
-  display: flex; align-items: center; gap: .6rem; padding: .55rem .4rem;
-  border-bottom: 1px solid rgba(255,255,255,.05); transition: background .1s;
-}
-.profile-share-item:hover { background: rgba(255,255,255,.04); border-radius: 6px; }
-.profile-share-thumb {
-  width: 48px; height: 36px; object-fit: cover; border-radius: 4px;
-  background: rgba(255,255,255,.06); flex-shrink: 0; cursor: pointer;
-  transition: opacity .15s;
-}
-.profile-share-thumb:hover { opacity: .75; }
-.profile-share-info { flex: 1; min-width: 0; }
-.profile-share-label {
-  font-size: .78rem; color: #fff; white-space: nowrap; overflow: hidden;
-  text-overflow: ellipsis;
-}
-.profile-share-meta {
-  font-size: .65rem; color: rgba(255,255,255,.35); margin-top: .15rem;
-  display: flex; align-items: center; gap: .5rem;
-}
-.profile-share-badge {
-  padding: .1rem .4rem; border-radius: 4px; font-size: .6rem; font-weight: 600;
-}
-.profile-share-badge.indefinite { background: rgba(75,200,120,.15); color: rgba(75,200,120,.9); }
-.profile-share-badge.temporary { background: rgba(255,255,255,.08); color: rgba(255,255,255,.45); }
-.profile-share-badge.expired { background: rgba(255,80,80,.15); color: rgba(255,80,80,.8); }
-.profile-share-badge.url-source { background: rgba(160,120,255,.15); color: rgba(160,120,255,.9); }
-.profile-share-actions {
-  display: flex; gap: .3rem; flex-shrink: 0;
-}
-.profile-share-actions button {
-  background: rgba(255,255,255,.06); border: none; border-radius: 6px;
-  color: rgba(255,255,255,.5); padding: .3rem .45rem; cursor: pointer;
-  transition: all .15s; font-size: .7rem;
-}
-.profile-share-actions button:hover { background: rgba(255,255,255,.12); color: #fff; }
-.profile-share-actions button.delete:hover { background: rgba(255,60,60,.2); color: #ff6b6b; }
 .profile-footer {
   margin-top: .8rem; padding-top: .6rem; border-top: 1px solid rgba(255,255,255,.08);
   font-size: .7rem; color: rgba(255,255,255,.35);
-}
-.profile-empty {
-  text-align: center; padding: 2rem 1rem; color: rgba(255,255,255,.3); font-size: .82rem;
-}
-.profile-share-confirm {
-  display: flex; align-items: center; gap: .4rem; font-size: .68rem;
-  color: rgba(255,80,80,.8); margin-top: .3rem;
-}
-.profile-share-confirm button {
-  padding: .2rem .5rem; border: none; border-radius: 4px; font-size: .65rem;
-  font-weight: 600; cursor: pointer;
-}
-.profile-share-confirm .confirm-yes {
-  background: rgba(255,60,60,.2); color: #ff6b6b;
-}
-.profile-share-confirm .confirm-no {
-  background: rgba(255,255,255,.08); color: rgba(255,255,255,.6);
 }
 /* ── Embed mode ──────────────────────────────────────────── */
 body.embed-mode .toolbar,
@@ -2134,9 +2011,6 @@ X.B(E,Y);return E}return J}())
       <button class="tb-btn" id="btnSnap" title="Snapshot (E)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
       </button>
-      <button class="tb-btn" id="btnShare" title="Share">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-      </button>
       <div class="tb-sep"></div>
       <button class="tb-btn" id="btnReload" title="Reload (R)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
@@ -2327,10 +2201,6 @@ if (window.electronAPI) {
   document.getElementById('titlebar').appendChild(tb);
 }
 
-const SHARE_HOST = location.origin === 'file://' || location.protocol === 'file:'
-  ? ''
-  : '';
-
 const wrap = $('#compareWrap');
 const box = $('#box');
 const sliderHandle = $('#sliderHandle');
@@ -2386,16 +2256,6 @@ function fmtBytes(b) {
 }
 
 // ── Helpers ────────────────────────────────────────────────────
-let comparisonCounted = false;
-function pingCompare() {
-  if (comparisonCounted || imageCount < 2) return;
-  comparisonCounted = true;
-  navigator.sendBeacon('/api/stats/compare');
-  if (mediaMode === 'video') {
-    navigator.sendBeacon('/api/stats/video-compare');
-  }
-}
-
 function isVideoFile(f) {
   if (f.type && f.type.startsWith('video/')) return true;
   return /\.(mp4|webm|mov|avi|mkv|m4v)$/i.test(f.name);
@@ -2591,7 +2451,6 @@ function clearAll() {
     if (strip) { strip.innerHTML = ''; strip.classList.add('hidden'); }
   });
   imageCount = 0;
-  comparisonCounted = false;
   mediaMode = null;
   isPlaying = false;
   folderSides = [null, null];
@@ -2681,7 +2540,6 @@ function updateMode() {
   $('#sepSwap').classList.remove('hidden');
   const inFolderMode = !!(folderSides[0] || folderSides[1]);
   $('#btnAdd').classList.toggle('hidden', isVideo || imageCount >= MAX_IMAGES || inFolderMode);
-  $('#btnShare').classList.toggle('hidden', false);
   document.getElementById('pageFooter').classList.toggle('hidden', imageCount > 0);
   document.getElementById('supportBtn').classList.toggle('hidden', imageCount > 0);
   document.getElementById('tipBadge').classList.toggle('hidden', imageCount > 0 || document.getElementById('tipBadge').dataset.dismissed === '1');
@@ -2693,7 +2551,6 @@ function updateMode() {
 
   box.dataset.count = visibleCount;
   updateVideoControls();
-  pingCompare();
 }
 
 // ── View switching ────────────────────────────────────────────
@@ -3118,237 +2975,7 @@ $('#btnSnap').addEventListener('click', async () => {
   a.download = filename;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  navigator.sendBeacon('/api/stats/snapshot');
-});
 
-$('#btnShare').addEventListener('click', () => {
-  const loaded = slots.filter(s => s.file);
-  if (!loaded.length) { showToast('Load images first.'); return; }
-
-  const isVideoShare = mediaMode === 'video';
-  const allUrlSourced = loaded.every(s => s.sourceUrl);
-  const hasUrlSourced = loaded.some(s => s.sourceUrl);
-
-  const modal = $('#shareModal');
-  const titleEl = $('#shareModalTitle');
-  const msgEl = $('#shareModalMsg');
-  const linkBox = $('#shareLinkBox');
-  const linkUrl = $('#shareLinkUrl');
-  const linkCopied = $('#shareLinkCopied');
-  const cancelBtn = $('#shareCancel');
-  const confirmBtn = $('#shareConfirm');
-  const embedCode = $('#shareEmbedCode');
-  const extraRow = $('#shareExtraRow');
-
-  titleEl.textContent = 'Share Comparison';
-  if (isVideoShare && !allUrlSourced) {
-    // Check combined size before even showing confirm button — skip URL-sourced slots
-    const totalBytes = loaded.reduce((sum, s) => sum + (s.sourceUrl ? 0 : (s.file?.size || 0)), 0);
-    const LIMIT = 50 * 1024 * 1024;
-    if (totalBytes > LIMIT) {
-      const totalMB = (totalBytes / 1024 / 1024).toFixed(1);
-      msgEl.textContent = `Video files are too large to share (${totalMB} MB combined). The limit is 50 MB total. Try shorter clips or lower-resolution videos.`;
-      linkBox.classList.remove('show');
-      linkCopied.textContent = '';
-      extraRow.style.display = 'none';
-      cancelBtn.textContent = 'Close';
-      confirmBtn.style.display = 'none';
-      $('#shareModalActions').classList.add('center');
-      modal.classList.add('open');
-      const closeModal = () => {
-        modal.classList.remove('open');
-        cancelBtn.removeEventListener('click', closeModal);
-        modal.removeEventListener('click', bgClose);
-      };
-      const bgClose = e => { if (e.target === modal) closeModal(); };
-      cancelBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', bgClose);
-      return;
-    }
-  }
-
-  const loggedIn = window._auth && window._auth.isLoggedIn();
-  if (allUrlSourced) {
-    if (loggedIn) {
-      msgEl.innerHTML = 'A shareable link will be created using the external URLs. No files will be uploaded. Select the link expiration type.';
-    } else {
-      msgEl.innerHTML = 'A shareable link will be created using the external URLs. No files will be uploaded. Select the link expiration type. Create an account to manage your links. <a id="shareMsgSignIn">Sign In</a>';
-      const signInLink = document.getElementById('shareMsgSignIn');
-      if (signInLink) signInLink.addEventListener('click', () => { modal.classList.remove('open'); window._auth?.login(); });
-    }
-  } else if (hasUrlSourced) {
-    const mediaWordLc = isVideoShare ? 'videos' : 'images';
-    msgEl.innerHTML = `Some ${mediaWordLc} will be uploaded, while URL-sourced ones will be linked directly. Select the link expiration type.`;
-  } else if (isVideoShare) {
-    msgEl.innerHTML = 'Your videos will be uploaded to generate a shareable link. The current view, zoom, position, and labels will be preserved. Videos and the link will be <strong>automatically deleted after 2 weeks</strong>.';
-  } else {
-    msgEl.innerHTML = 'Your images will be uploaded to generate a shareable link. The current view, zoom, position, and labels will be preserved. Images and the link will be <strong>automatically deleted after 2 weeks</strong>.';
-  }
-  linkBox.classList.remove('show');
-  linkCopied.textContent = '';
-  extraRow.style.display = 'none';
-  cancelBtn.textContent = 'Cancel';
-  confirmBtn.textContent = 'Upload & Share';
-  confirmBtn.disabled = false;
-  confirmBtn.style.display = '';
-  $('#shareModalActions').classList.remove('center');
-
-  // ── Expiry toggle ──
-  const expiryToggle = $('#shareExpiryToggle');
-  const expiryHint = $('#shareExpiryHint');
-  const expiryOpts = expiryToggle.querySelectorAll('.share-expiry-opt');
-  let selectedExpiry = '14d';
-
-  // Show toggle only when auth is available (not Electron)
-  if (!window.electronAPI) {
-    expiryToggle.style.display = '';
-  } else {
-    expiryToggle.style.display = 'none';
-  }
-  expiryHint.style.display = 'none';
-  expiryOpts.forEach(o => o.classList.toggle('active', o.dataset.expiry === '14d'));
-
-  const mediaWord = isVideoShare ? 'Videos' : 'Images';
-  const mediaWordLc = isVideoShare ? 'videos' : 'images';
-  // For URL-sourced shares, the message stays the same regardless of toggle
-  const defaultMsg = allUrlSourced ? null
-    : hasUrlSourced ? `Some ${mediaWordLc} will be uploaded, while URL-sourced ones will be linked directly. Select the link expiration type.`
-    : `Your ${mediaWordLc} will be uploaded to generate a shareable link. The current view, zoom, position, and labels will be preserved. ${mediaWord} and the link will be <strong>automatically deleted after 2 weeks</strong>.`;
-  const indefiniteMsg = allUrlSourced ? null
-    : hasUrlSourced ? `Some ${mediaWordLc} will be uploaded, while URL-sourced ones will be linked directly. Select the link expiration type.`
-    : `Your ${mediaWordLc} will be uploaded to generate a shareable link. The current view, zoom, position, and labels will be preserved. This link will <strong>not expire</strong>.`;
-
-  expiryOpts.forEach(opt => {
-    opt.addEventListener('click', () => {
-      const val = opt.dataset.expiry;
-      expiryOpts.forEach(o => o.classList.toggle('active', o === opt));
-
-      if (val === 'indefinite') {
-        if (!loggedIn && !allUrlSourced) {
-          // Non-URL shares require sign-in for indefinite
-          selectedExpiry = '14d';
-          expiryOpts.forEach(o => o.classList.toggle('active', o.dataset.expiry === '14d'));
-          expiryHint.innerHTML = 'Sign in to manage links. <a id="shareSignInLink">Sign In</a>';
-          expiryHint.style.display = '';
-          const signInLink = document.getElementById('shareSignInLink');
-          if (signInLink) signInLink.addEventListener('click', () => {
-            closeModal();
-            window._auth.login();
-          });
-          return;
-        }
-        selectedExpiry = 'indefinite';
-        expiryHint.style.display = 'none';
-        if (indefiniteMsg) msgEl.innerHTML = indefiniteMsg;
-      } else {
-        selectedExpiry = '14d';
-        expiryHint.style.display = 'none';
-        if (defaultMsg) msgEl.innerHTML = defaultMsg;
-      }
-    });
-  });
-
-  modal.classList.add('open');
-
-  function closeModal() {
-    modal.classList.remove('open');
-    cancelBtn.removeEventListener('click', closeModal);
-    confirmBtn.removeEventListener('click', doShare);
-    modal.removeEventListener('click', bgClose);
-  }
-  function bgClose(e) { if (e.target === modal) closeModal(); }
-
-  async function doShare() {
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = 'Uploading...';
-
-    const cs = getComputedStyle(box);
-    const state = {
-      mode,
-      view,
-      imageCount,
-      mediaType: mediaMode,
-      scale: parseFloat(cs.getPropertyValue('--img-scale')) || 1,
-      tx: parseFloat(cs.getPropertyValue('--img-tx')) || 0,
-      ty: parseFloat(cs.getPropertyValue('--img-ty')) || 0,
-      sliderPct: parseFloat(cs.getPropertyValue('--slider-pct')) || 50,
-      sliderPctV: parseFloat(cs.getPropertyValue('--slider-pct-v')) || 50,
-      labelsVisible: box.classList.contains('labels-visible'),
-      slots: loaded.map(s => ({
-        index: parseInt(s.panel.dataset.idx),
-        label: s.labelInput.value,
-        sourceUrl: s.sourceUrl || null,
-      })),
-    };
-
-    const fd = new FormData();
-    fd.append('state', JSON.stringify(state));
-    fd.append('expiry', selectedExpiry);
-    loaded.forEach(s => {
-      if (!s.sourceUrl) fd.append('images', s.file, s.name);
-    });
-
-    const thumbBlob = await captureViewBlob('image/jpeg', 0.8).catch(() => null);
-    if (thumbBlob) fd.append('thumbnail', thumbBlob, 'thumbnail.jpg');
-
-    // Include auth token if logged in
-    const headers = {};
-    if (window._auth && window._auth.isLoggedIn()) {
-      const token = await window._auth.getToken();
-      if (token) headers['Authorization'] = 'Bearer ' + token;
-    }
-
-    try {
-      const resp = await fetch(SHARE_HOST + '/api/share', { method: 'POST', body: fd, headers });
-      const json = await resp.json();
-      if (json.ok) {
-        titleEl.textContent = 'Link Ready';
-        const expiryNote = selectedExpiry === 'indefinite'
-          ? 'This link will not expire.'
-          : 'It will expire in 2 weeks.';
-        const hasExternal = loaded.some(s => s.sourceUrl);
-        const externalNote = hasExternal ? ' Note: some images are loaded from external URLs — the link will stop working if those URLs become unavailable.' : '';
-        msgEl.textContent = 'The link has been copied to your clipboard. Anyone with this link will see the same view, zoom, and position. ' + expiryNote + externalNote;
-        expiryToggle.style.display = 'none';
-        expiryHint.style.display = 'none';
-        linkUrl.value = json.url;
-        linkBox.classList.add('show');
-        const embedUrl = json.url + (json.url.includes('?') ? '&' : '?') + 'embed=1';
-        const embedSnippet = `<iframe src="${embedUrl}" width="100%" height="500" style="border:none;border-radius:8px" allowfullscreen></iframe>`;
-        embedCode.value = embedSnippet;
-        extraRow.style.display = '';
-        confirmBtn.style.display = 'none';
-        cancelBtn.textContent = 'Done';
-        $('#shareModalActions').classList.add('center');
-        await navigator.clipboard.writeText(json.url).catch(() => {});
-        linkCopied.textContent = '✓ Copied to clipboard';
-        linkUrl.addEventListener('click', async () => {
-          linkUrl.select();
-          await navigator.clipboard.writeText(json.url).catch(() => {});
-          linkCopied.textContent = '✓ Copied to clipboard';
-        });
-        const embedCopyBtn = $('#shareEmbedCopy .share-extra-btn');
-        embedCopyBtn.addEventListener('click', async () => {
-          await navigator.clipboard.writeText(embedSnippet).catch(() => {});
-          embedCopyBtn.classList.add('copied');
-          setTimeout(() => embedCopyBtn.classList.remove('copied'), 2000);
-        });
-      } else {
-        msgEl.textContent = 'Share failed: ' + (json.error || 'unknown error');
-        confirmBtn.textContent = 'Retry';
-        confirmBtn.disabled = false;
-      }
-    } catch (e) {
-      console.error(e);
-      msgEl.textContent = 'Share failed: server not reachable.';
-      confirmBtn.textContent = 'Retry';
-      confirmBtn.disabled = false;
-    }
-  }
-
-  cancelBtn.addEventListener('click', closeModal);
-  confirmBtn.addEventListener('click', doShare);
-  modal.addEventListener('click', bgClose);
 });
 
 $('#btnReload').addEventListener('click', () => {
@@ -3835,7 +3462,6 @@ function loadPair(idx) {
   if (!folderPairs.length) return;
   idx = ((idx % folderPairs.length) + folderPairs.length) % folderPairs.length;
   currentPairIdx = idx;
-  comparisonCounted = false; // each folder pair is a new comparison
   const pair = folderPairs[idx];
   [pair.left, pair.right].forEach((f, side) => {
     if (f) {
@@ -4404,91 +4030,6 @@ if (new URLSearchParams(location.search).has('embed')) {
   });
 })();
 
-// ── Load shared state from URL ────────────────────────────────
-(async function loadShared() {
-  const params = new URLSearchParams(location.search);
-  const shareId = params.get('share');
-  if (!shareId) return;
-  comparisonCounted = true; // Don't double-count share views as organic comparisons
-
-  // Replace share button with X (new comparison) button
-  const shareBtn = $('#btnShare');
-  shareBtn.title = 'New Comparison';
-  shareBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-  shareBtn.onclick = (e) => { e.stopPropagation(); window.location.href = '/compare'; };
-
-  showToast('Loading shared comparison...');
-  try {
-    const resp = await fetch(SHARE_HOST + `/api/share/${shareId}`);
-    const json = await resp.json();
-    if (!json.ok) { showToast(json.error || 'Shared link not found.'); return; }
-
-    const { state } = json.data;
-    const loadedSlots = state.slots || [];
-
-    const loadPromises = [];
-    for (const s of loadedSlots) {
-      if (s.sourceUrl) {
-        // URL-sourced slot — load directly from external URL
-        const isVid = isVideoFile({ name: s.sourceUrl, type: '' });
-        const el = isVid ? slots[s.index].video : slots[s.index].img;
-        const evt = isVid ? 'loadedmetadata' : 'load';
-        loadPromises.push(new Promise(resolve => {
-          el.addEventListener(evt, resolve, { once: true });
-          el.addEventListener('error', resolve, { once: true }); // don't block on failure
-        }));
-        loadMediaFromUrl(s.index, s.sourceUrl);
-        continue;
-      }
-      const imgUrl = s.imageUrl || (s.imageKey ? `/api/image/${s.imageKey}` : null);
-      if (!imgUrl) continue;
-      const imgResp = await fetch(SHARE_HOST + imgUrl);
-      const blob = await imgResp.blob();
-      const file = new File([blob], s.originalName, { type: blob.type });
-      const isVid = isVideoFile(file);
-      const el = isVid ? slots[s.index].video : slots[s.index].img;
-      const evt = isVid ? 'loadedmetadata' : 'load';
-      loadPromises.push(new Promise(resolve => {
-        el.addEventListener(evt, resolve, { once: true });
-      }));
-      loadMediaAt(s.index, file);
-    }
-
-    await Promise.all(loadPromises);
-
-    for (const s of loadedSlots) {
-      slots[s.index].labelInput.value = s.label;
-    }
-
-    // Apply saved view AFTER all media loaded — updateMode() inside
-    // img.onload may have overridden the view to 'horizontal', so
-    // we must call setView last to restore the intended layout.
-    const viewAliases = { grid: 'mix', side: 'split' };
-    const savedView = viewAliases[state.view] || state.view || 'split';
-    setView(savedView);
-
-    if (state.sizeMode === 'actual') {
-      $('#btnActual').click();
-    } else {
-      box.style.setProperty('--img-scale', state.scale || 1);
-    }
-    box.style.setProperty('--img-tx', (state.tx || 0) + 'px');
-    box.style.setProperty('--img-ty', (state.ty || 0) + 'px');
-    if (state.sliderPct != null) box.style.setProperty('--slider-pct', state.sliderPct + '%');
-    if (state.sliderPctV != null) box.style.setProperty('--slider-pct-v', state.sliderPctV + '%');
-
-    if (state.labelsVisible) {
-      box.classList.add('labels-visible');
-      $('#btnLabel').classList.add('active');
-    }
-
-    showToast('');
-  } catch (e) {
-    console.error('Failed to load shared state:', e);
-    showToast('Failed to load shared comparison.');
-  }
-})();
-
 // ── Record Comparison Video ────────────────────────────────────
 (function () {
   let recorder = null;
@@ -4853,34 +4394,6 @@ if (new URLSearchParams(location.search).has('embed')) {
   </div>
 </div>
 
-<div class="modal-overlay" id="shareModal">
-  <div class="modal">
-    <h3 id="shareModalTitle">Share Comparison</h3>
-    <p id="shareModalMsg">Your images will be uploaded to generate a shareable link. Images and the link will be <strong>automatically deleted after 2 weeks</strong>.</p>
-    <div class="share-expiry-toggle" id="shareExpiryToggle" style="display:none">
-      <span>Link expires:</span>
-      <div class="share-expiry-options">
-        <button type="button" class="share-expiry-opt active" data-expiry="14d">Two weeks</button>
-        <button type="button" class="share-expiry-opt" data-expiry="indefinite">Indefinite</button>
-      </div>
-    </div>
-    <div class="share-expiry-hint" id="shareExpiryHint" style="display:none"></div>
-    <div class="modal-link-box" id="shareLinkBox">
-      <input class="modal-link-url" id="shareLinkUrl" type="text" readonly="readonly">
-      <div class="modal-link-copied" id="shareLinkCopied"></div>
-    </div>
-    <textarea class="modal-embed-code" id="shareEmbedCode" readonly="readonly" style="display:none"></textarea>
-    <div class="share-extra-row" id="shareExtraRow" style="display:none">
-      <span class="share-extra-item" id="shareEmbedCopy">Need embed code? <button class="share-extra-btn" title="Copy embed code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
-      <span class="share-extra-item"><a href="https://buy.stripe.com/fZufZh1o8dHO2nZeyYgYU01" target="_blank" rel="noopener" class="share-extra-link">Find this useful? <span class="share-extra-btn" title="Support"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span></a></span>
-    </div>
-    <div class="modal-actions" id="shareModalActions">
-      <button class="modal-btn modal-btn-cancel" id="shareCancel">Cancel</button>
-      <button class="modal-btn modal-btn-primary" id="shareConfirm">Upload &amp; Share</button>
-    </div>
-  </div>
-</div>
-
 <!-- ── Profile modal ── -->
 <div class="modal-overlay" id="profileModal">
   <div class="modal" style="width:520px;max-width:92vw">
@@ -4888,12 +4401,6 @@ if (new URLSearchParams(location.search).has('embed')) {
       <h3>Your Profile</h3>
       <span class="profile-email" id="profileEmail"></span>
       <span class="profile-patron hidden" id="profilePatron" title="Thank you for your support!">❤️ Patron</span>
-    </div>
-    <div class="profile-shares" id="profileShares">
-      <div class="profile-empty">Loading...</div>
-    </div>
-    <div class="profile-footer">
-      <span id="profileCount"></span>
     </div>
     <div class="modal-actions">
       <button class="modal-btn modal-btn-cancel" id="profileLogout">Sign Out</button>
@@ -4954,10 +4461,7 @@ if (new URLSearchParams(location.search).has('embed')) {
       const params = new URLSearchParams(window.location.search);
       if (params.has('code') && params.has('state')) {
         await auth0Client.handleRedirectCallback();
-        // Clean URL but preserve share param if present
-        const share = params.get('share');
-        const clean = window.location.pathname + (share ? '?share=' + share : '');
-        window.history.replaceState({}, '', clean);
+        window.history.replaceState({}, '', window.location.pathname);
       }
 
       _isLoggedIn = await auth0Client.isAuthenticated();
@@ -4991,9 +4495,7 @@ if (new URLSearchParams(location.search).has('embed')) {
 
   // ── Profile modal logic ─────────────────────────────────────
   const profileModal = document.getElementById('profileModal');
-  const profileShares = document.getElementById('profileShares');
   const profileEmail = document.getElementById('profileEmail');
-  const profileCount = document.getElementById('profileCount');
   const profileClose = document.getElementById('profileClose');
   const profileLogout = document.getElementById('profileLogout');
 
@@ -5009,131 +4511,11 @@ if (new URLSearchParams(location.search).has('embed')) {
     window._auth.logout();
   });
 
-  async function openProfileModal() {
+  function openProfileModal() {
     profileModal.classList.add('open');
     profileEmail.textContent = _user?.email || '';
-    profileShares.innerHTML = '<div class="profile-empty">Loading...</div>';
-    profileCount.textContent = '';
-
-    const token = await window._auth.getToken();
-    if (!token) {
-      profileShares.innerHTML = '<div class="profile-empty">Session expired. Please sign in again.</div>';
-      return;
-    }
-
-    try {
-      const resp = await fetch(SHARE_HOST + '/api/profile/shares', {
-        headers: { Authorization: 'Bearer ' + token },
-      });
-      const json = await resp.json();
-      if (!json.ok) throw new Error(json.error);
-
-      if (json.email) profileEmail.textContent = json.email;
-      const shares = json.shares || [];
-      const indefiniteCount = shares.filter(s => s.expiry === 'indefinite' && !s.expired && s.category !== 'url-source').length;
-      const indefLimit = json.indefiniteLimit || 50;
-      window._indefLimit = indefLimit;
-      profileCount.textContent = indefiniteCount + ' / ' + indefLimit + ' indefinite links used';
-      document.getElementById('profilePatron').classList.toggle('hidden', !(json.contribution > 0));
-
-      if (!shares.length) {
-        profileShares.innerHTML = '<div class="profile-empty">No shares yet. Use the Share button to create one.</div>';
-        return;
-      }
-
-      profileShares.innerHTML = '';
-      shares.forEach(s => {
-        const item = document.createElement('div');
-        item.className = 'profile-share-item';
-        item.dataset.shareId = s.shareId;
-        if (s.category) item.dataset.category = s.category;
-
-        const date = new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-        const isUrlSource = s.category === 'url-source';
-        const badgeClass = s.expired ? 'expired' : isUrlSource ? 'url-source' : (s.expiry === 'indefinite' ? 'indefinite' : 'temporary');
-        const badgeText = s.expired ? 'Expired' : isUrlSource ? 'URL' : (s.expiry === 'indefinite' ? 'Indefinite' : '2 weeks');
-        const shareUrl = (SHARE_HOST || window.location.origin) + '/compare?share=' + s.shareId;
-
-        item.innerHTML =
-          '<a href="' + shareUrl + '" target="_blank" rel="noopener"><img class="profile-share-thumb" src="' + (SHARE_HOST || '') + '/api/thumbnail/' + s.shareId + '.jpg" loading="lazy" alt=""></a>' +
-          '<div class="profile-share-info">' +
-            '<div class="profile-share-label">' + escapeHtml(s.label || 'Untitled') + '</div>' +
-            '<div class="profile-share-meta">' +
-              '<span>' + date + '</span>' +
-              '<span class="profile-share-badge ' + badgeClass + '">' + badgeText + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="profile-share-actions">' +
-            '<button class="copy" title="Copy link">&#128279;</button>' +
-            '<button class="delete" title="Delete">&#128465;</button>' +
-          '</div>';
-
-        // Copy handler
-        item.querySelector('.copy').addEventListener('click', async () => {
-          await navigator.clipboard.writeText(shareUrl).catch(() => {});
-          const btn = item.querySelector('.copy');
-          btn.textContent = '\u2713';
-          setTimeout(() => { btn.innerHTML = '&#128279;'; }, 1500);
-        });
-
-        // Delete handler
-        item.querySelector('.delete').addEventListener('click', () => {
-          const existing = item.querySelector('.profile-share-confirm');
-          if (existing) { existing.remove(); return; }
-
-          const confirm = document.createElement('div');
-          confirm.className = 'profile-share-confirm';
-          confirm.innerHTML = 'Delete this share? <button class="confirm-yes">Yes</button><button class="confirm-no">No</button>';
-          item.querySelector('.profile-share-info').appendChild(confirm);
-
-          confirm.querySelector('.confirm-no').addEventListener('click', () => confirm.remove());
-          confirm.querySelector('.confirm-yes').addEventListener('click', async () => {
-            confirm.innerHTML = 'Deleting...';
-            try {
-              const t = await window._auth.getToken();
-              const r = await fetch(SHARE_HOST + '/api/profile/shares/' + s.shareId, {
-                method: 'DELETE',
-                headers: { Authorization: 'Bearer ' + t },
-              });
-              const j = await r.json();
-              if (j.ok) {
-                item.style.transition = 'opacity .3s';
-                item.style.opacity = '0';
-                setTimeout(() => {
-                  item.remove();
-                  // Update count
-                  const remaining = profileShares.querySelectorAll('.profile-share-item');
-                  if (!remaining.length) {
-                    profileShares.innerHTML = '<div class="profile-empty">No shares yet.</div>';
-                  }
-                  const indef = [...remaining].filter(el => el.querySelector('.indefinite') && el.dataset.category !== 'url-source').length;
-                  profileCount.textContent = indef + ' / ' + (window._indefLimit || 50) + ' indefinite links used';
-                }, 300);
-              } else {
-                confirm.textContent = j.error || 'Failed';
-                confirm.style.color = '#ff6b6b';
-              }
-            } catch {
-              confirm.innerHTML = '<span style="color:#ff6b6b">Failed to delete</span>';
-            }
-          });
-        });
-
-        profileShares.appendChild(item);
-      });
-    } catch (e) {
-      console.error('Profile load error:', e);
-      profileShares.innerHTML = '<div class="profile-empty">Failed to load shares.</div>';
-    }
   }
 
-  function escapeHtml(s) {
-    const d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
-  }
-
-  // Expose for share modal
   window._openProfileModal = openProfileModal;
 })();
 </script>
@@ -5141,9 +4523,6 @@ if (new URLSearchParams(location.search).has('embed')) {
 <script>
 (function() {
   const tips = [
-    'Create an account to get indefinite share links',
-    'Host large files on your site and create URL-based indefinite links',
-    'Sign in to manage and track all your shared links',
     'You can compare entire folders side by side',
     'Host large videos on your site and compare them here',
     'Drag & drop images or videos directly onto the page',
