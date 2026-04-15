@@ -390,18 +390,6 @@ body.toolbar-autohide:not(.is-app) .labels-visible .panel-label {
 .menu-check { margin-left: auto; opacity: 0; font-size: .75rem; }
 .menu-check.on { opacity: 1; }
 
-/* ── Support button (visible when no images loaded) ── */
-.support-btn {
-  position: absolute; bottom: 1rem; left: 1rem; z-index: 10;
-  display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 10px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
-  color: var(--text-muted); opacity: .4; text-decoration: none;
-  transition: opacity .15s, background .15s;
-}
-.support-btn:hover { opacity: .85; background: rgba(255,255,255,.1); color: #fd79a8; }
-.support-btn svg { width: 20px; height: 20px; }
-.support-btn.hidden { display: none; }
 
 /* ── Tip speech bubble (desktop only, appears above support heart) ── */
 .tip-badge {
@@ -2023,9 +2011,7 @@ X.B(E,Y);return E}return J}())
     </div>
     <div class="details-panel" id="detPanel"></div>
 
-    <a class="support-btn" id="supportBtn" href="https://buy.stripe.com/fZufZh1o8dHO2nZeyYgYU01" target="_blank" rel="noopener" title="Support">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-    </a>
+
     <div class="tip-badge hidden" id="tipBadge" data-dismissed="1" style="transition: opacity 0.4s; opacity: 0;">
       <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
       <span class="tip-text" id="tipText">Edit labels as you like</span>
@@ -2417,7 +2403,6 @@ function updateMode() {
   const inFolderMode = !!(folderSides[0] || folderSides[1]);
   $('#btnAdd').classList.toggle('hidden', isVideo || imageCount >= MAX_IMAGES || inFolderMode);
   document.getElementById('pageFooter').classList.toggle('hidden', imageCount > 0);
-  document.getElementById('supportBtn').classList.toggle('hidden', imageCount > 0);
   document.getElementById('tipBadge').classList.toggle('hidden', imageCount > 0 || document.getElementById('tipBadge').dataset.dismissed === '1');
 
   if (mode !== prevMode) {
