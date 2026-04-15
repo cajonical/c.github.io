@@ -2802,10 +2802,10 @@ sliderHandle.addEventListener('touchstart', e => {
   sliderDragging = true;
   sliderHandle.classList.add('active');
   updateSliderX(e.touches[0].clientX);
-}, { passive: true });
+}, { passive: false });
 window.addEventListener('touchmove', e => {
-  if (sliderDragging) updateSliderX(e.touches[0].clientX);
-}, { passive: true });
+  if (sliderDragging) { e.preventDefault(); updateSliderX(e.touches[0].clientX); }
+}, { passive: false });
 window.addEventListener('touchend', () => {
   if (sliderDragging) { sliderDragging = false; sliderHandle.classList.remove('active'); }
 });
@@ -2834,10 +2834,10 @@ sliderHandleV.addEventListener('touchstart', e => {
   sliderVDragging = true;
   sliderHandleV.classList.add('active');
   updateSliderY(e.touches[0].clientY);
-}, { passive: true });
+}, { passive: false });
 window.addEventListener('touchmove', e => {
-  if (sliderVDragging) updateSliderY(e.touches[0].clientY);
-}, { passive: true });
+  if (sliderVDragging) { e.preventDefault(); updateSliderY(e.touches[0].clientY); }
+}, { passive: false });
 window.addEventListener('touchend', () => {
   if (sliderVDragging) { sliderVDragging = false; sliderHandleV.classList.remove('active'); }
 });
