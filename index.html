@@ -1952,6 +1952,11 @@ X.B(E,Y);return E}return J}())
         Hide Toolbar
         <span class="menu-check" id="autoHideCheck">✓</span>
       </button>
+      <button class="menu-item" id="btnLockPanZoom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+        Lock Pan &amp; Zoom
+        <span class="menu-check" id="lockPanZoomCheck">✓</span>
+      </button>
     </div>
     <div class="details-panel" id="detPanel"></div>
 
@@ -2040,6 +2045,7 @@ let mode = 'two';    // 'two' or 'multi'
 let view = 'split';  // split/slider/peek | horizontal/vertical/mix
 let zoomTid = null;
 let fitScale = 1;
+let panZoomLocked = false;
 let isPlaying = false;
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(v, hi)); }
@@ -2866,6 +2872,7 @@ function showZoom(imgScale) {
 wrap.addEventListener('wheel', e => {
   if (!$('#pairGallery').classList.contains('hidden') && e.target.closest('.pg-box')) return;
   e.preventDefault();
+  if (panZoomLocked) return;
   const delta = e.ctrlKey ? e.deltaY * 0.5 : e.deltaY;
   const f = 1 - clamp(delta, -15, 15) * 0.01;
   zoomBy(f);
@@ -2883,6 +2890,7 @@ function zoomBy(factor) {
 let dragging = false, sx = 0, sy = 0;
 
 wrap.addEventListener('mousedown', e => {
+  if (panZoomLocked) return;
   if (e.target.closest('.slider-handle, .slider-handle-v, .panel-label, .toolbar, .upload-btn, .empty-state, .swap-zone, .menu-panel')) return;
   dragging = true; sx = e.clientX; sy = e.clientY;
   wrap.classList.add('dragging');
@@ -2910,6 +2918,7 @@ function tdist(t) {
 }
 
 wrap.addEventListener('touchstart', e => {
+  if (panZoomLocked) return;
   if (e.touches.length === 2) {
     touchPan = false;
     pinchDist = tdist(e.touches);
@@ -2925,6 +2934,7 @@ wrap.addEventListener('touchstart', e => {
 }, { passive: true });
 
 wrap.addEventListener('touchmove', e => {
+  if (panZoomLocked) return;
   if (e.touches.length >= 2 && pinchDist) {
     touchPan = false;
     const s = clamp((tdist(e.touches) / pinchDist) * pinchScale, 0.1, 40);
@@ -2988,11 +2998,13 @@ function isGalleryEvent(e) {
 wrap.addEventListener('gesturestart', e => {
   if (isGalleryEvent(e)) return;
   e.preventDefault();
+  if (panZoomLocked) return;
   gestureBaseScale = parseFloat(getComputedStyle(box).getPropertyValue('--img-scale'));
 });
 wrap.addEventListener('gesturechange', e => {
   if (isGalleryEvent(e)) return;
   e.preventDefault();
+  if (panZoomLocked) return;
   const next = clamp(gestureBaseScale * e.scale, 0.1, 40);
   box.style.setProperty('--img-scale', next);
   showZoom(next);
@@ -4054,6 +4066,23 @@ if (new URLSearchParams(location.search).has('embed')) {
 
   autoHideBtn.addEventListener('click', () => {
     setAutoHide(!document.body.classList.contains('toolbar-autohide'));
+  });
+
+  // ── Lock Pan & Zoom toggle ──
+  const lockPanZoomBtn = document.getElementById('btnLockPanZoom');
+  const lockPanZoomCheck = document.getElementById('lockPanZoomCheck');
+
+  function setLockPanZoom(on) {
+    panZoomLocked = on;
+    lockPanZoomCheck.classList.toggle('on', on);
+    localStorage.setItem('tl-lock-pan-zoom', on ? '1' : '');
+    if (on) { resetTransform(); sizeImages(); }
+  }
+
+  if (localStorage.getItem('tl-lock-pan-zoom') === '1') setLockPanZoom(true);
+
+  lockPanZoomBtn.addEventListener('click', () => {
+    setLockPanZoom(!panZoomLocked);
   });
 
   // top-edge hover zone — show toolbar when mouse near top
