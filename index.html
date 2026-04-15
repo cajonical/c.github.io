@@ -391,62 +391,6 @@ body.toolbar-autohide:not(.is-app) .labels-visible .panel-label {
 .menu-check.on { opacity: 1; }
 
 
-/* ── Tip speech bubble (desktop only, appears above support heart) ── */
-.tip-badge {
-  position: absolute; bottom: 3.5rem; left: 1rem; z-index: 10;
-  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px; padding: .55rem .7rem .55rem .75rem;
-  font-size: .75rem; color: var(--text-muted);
-  max-width: 300px; line-height: 1.45;
-  display: flex; align-items: flex-start; gap: .45rem;
-  animation: tipFadeIn .5s ease;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.3));
-}
-/* Speech bubble tail pointing down-left toward the heart icon */
-.tip-badge::after {
-  content: '';
-  position: absolute; bottom: -7px; left: 14px;
-  width: 0; height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 7px solid rgba(255,255,255,.08);
-}
-/* Tail border overlay */
-.tip-badge::before {
-  content: '';
-  position: absolute; bottom: -8px; left: 13px;
-  width: 0; height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid rgba(255,255,255,.1);
-  z-index: -1;
-}
-@keyframes tipFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.tip-badge .tip-icon { display: none; }
-.tip-badge .tip-close {
-  flex-shrink: 0; background: none; border: none; color: var(--text-muted);
-  cursor: pointer; opacity: .35; padding: 0; line-height: 1;
-  font-size: .85rem; transition: opacity .15s; margin-left: .15rem;
-}
-.tip-badge .tip-close:hover { opacity: .8; }
-.tip-badge.hidden { display: none; }
-/* Hide tip on mobile */
-@media (max-width: 768px) {
-  .tip-badge { display: none !important; }
-}
-
-/* ── Page footer (visible when no images loaded) ── */
-.page-footer {
-  position: absolute; bottom: .75rem; left: 0; right: 0;
-  text-align: center; z-index: 10;
-  font-size: .7rem; color: var(--text-muted); opacity: .4;
-  transition: opacity .15s;
-}
-.page-footer:hover { opacity: .7; }
-.page-footer a { color: var(--text-muted); text-decoration: none; }
-.page-footer a:hover { color: var(--text); text-decoration: underline; }
-.footer-dot { margin: 0 .35rem; }
-.page-footer.hidden { display: none; }
 
 /* ── Toast / Zoom pill ─────────────────────────────────────── */
 .help-toast {
@@ -2012,17 +1956,6 @@ X.B(E,Y);return E}return J}())
     <div class="details-panel" id="detPanel"></div>
 
 
-    <div class="tip-badge hidden" id="tipBadge" data-dismissed="1" style="transition: opacity 0.4s; opacity: 0;">
-      <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>
-      <span class="tip-text" id="tipText">Edit labels as you like</span>
-      <button class="tip-close" id="tipClose" title="Dismiss">×</button>
-    </div>
-
-    <div class="page-footer" id="pageFooter">
-      <a>Privacy</a>
-      <span class="footer-dot">·</span>
-      <a>Terms</a>
-    </div>
 
     <!-- ── Pair gallery popup ── -->
     <div class="pair-gallery hidden" id="pairGallery">
@@ -2402,8 +2335,6 @@ function updateMode() {
   $('#sepSwap').classList.remove('hidden');
   const inFolderMode = !!(folderSides[0] || folderSides[1]);
   $('#btnAdd').classList.toggle('hidden', isVideo || imageCount >= MAX_IMAGES || inFolderMode);
-  document.getElementById('pageFooter').classList.toggle('hidden', imageCount > 0);
-  document.getElementById('tipBadge').classList.toggle('hidden', imageCount > 0 || document.getElementById('tipBadge').dataset.dismissed === '1');
 
   if (mode !== prevMode) {
     if (mode === 'multi') setView('horizontal');
@@ -4129,33 +4060,7 @@ if (new URLSearchParams(location.search).has('embed')) {
 
 </script>
 
-  const tips = [
-    'You can compare entire folders side by side',
-    'Host large videos on your site and compare them here',
-    'Drag & drop images or videos directly onto the page',
-    'Use keyboard shortcuts: arrow keys to pan, +/- to zoom',
-    'Record your comparison as a video from the toolbar',
-    'Edit labels as you like',
-    'Show labels before taking a snapshot to include them',
-    'During recording, play the video multiple times to make it longer',
-    'Bookmark the compare page for quick access'
-  ];
-  const tipBadge = document.getElementById('tipBadge');
-  const tipText = document.getElementById('tipText');
-  const tipClose = document.getElementById('tipClose');
-  tipText.textContent = tips[Math.floor(Math.random() * tips.length)];
-  function dismissTip() {
-    tipBadge.dataset.dismissed = '1';
-    tipBadge.style.transition = 'opacity .4s ease';
-    tipBadge.style.opacity = '0';
-    setTimeout(function() { tipBadge.classList.add('hidden'); }, 400);
-  }
-  tipClose.addEventListener('click', function(e) { e.stopPropagation(); dismissTip(); });
-  setTimeout(dismissTip, 5000);
-})();
-</script>
-
-<!-- Cloudflare Web Analytics proxied via first-party Worker (/analytics/*) to avoid ad blockers -->
+<!-- (analytics removed) -->
 
 
 
