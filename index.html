@@ -2901,7 +2901,8 @@ window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remo
 
 // ── Mobile touch: single-finger pan + two-finger pinch ────────
 let pinchDist = null, pinchScale = null, pinchX = null, pinchY = null;
-let touchPan = false, touchX = 0, touchY = 0;
+let touchPan = false, touchX = 0, touchY = 0, touchStartX = 0, touchStartY = 0;
+let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
 
 function tdist(t) {
   const dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
@@ -2918,8 +2919,8 @@ wrap.addEventListener('touchstart', e => {
   } else if (e.touches.length === 1) {
     if (e.target.closest('.slider-handle, .slider-handle-v, .panel-label, .toolbar, .upload-btn, .empty-state, .swap-zone, .menu-panel')) return;
     touchPan = true;
-    touchX = e.touches[0].clientX;
-    touchY = e.touches[0].clientY;
+    touchStartX = touchX = e.touches[0].clientX;
+    touchStartY = touchY = e.touches[0].clientY;
   }
 }, { passive: true });
 
@@ -2952,7 +2953,32 @@ wrap.addEventListener('touchmove', e => {
   }
 }, { passive: true });
 
-wrap.addEventListener('touchend', () => { pinchDist = null; touchPan = false; });
+wrap.addEventListener('touchend', e => {
+  const wasPinch = pinchDist !== null;
+  pinchDist = null;
+  const wasTouchOnArea = touchPan;
+  touchPan = false;
+
+  if (!wasTouchOnArea || wasPinch || e.changedTouches.length !== 1) return;
+  const t = e.changedTouches[0];
+  const moved = Math.hypot(t.clientX - touchStartX, t.clientY - touchStartY) > 10;
+  if (moved) return; // was a pan, not a tap
+
+  const now = Date.now();
+  const dtx = t.clientX - lastTapX, dty = t.clientY - lastTapY;
+  const nearSameSpot = Math.hypot(dtx, dty) < 40;
+  if (now - lastTapTime < 300 && nearSameSpot) {
+    // Double-tap: reset to fit
+    resetTransform(); sizeImages(); showZoom(1);
+    $('#btnFit').classList.add('active');
+    $('#btnActual').classList.remove('active');
+    lastTapTime = 0;
+  } else {
+    lastTapTime = now;
+    lastTapX = t.clientX;
+    lastTapY = t.clientY;
+  }
+});
 
 // Safari trackpad pinch fires gesture events instead of wheel
 let gestureBaseScale = 1;
