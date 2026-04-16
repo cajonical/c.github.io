@@ -2907,7 +2907,9 @@ function animateSliderV() {
   const start = performance.now(), duration = sliderVDuration * 1000;
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
-    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+    const ease = t < 0.6
+      ? 0.5 * (t / 0.6) * (2 - t / 0.6)
+      : 0.5 + 0.5 * ((t - 0.6) / 0.4) * ((t - 0.6) / 0.4);
     box.style.setProperty('--slider-pct-v', (from + (to - from) * ease) + '%');
     if (t < 1) sliderVAnimId = requestAnimationFrame(step);
     else sliderVAnimId = null;
