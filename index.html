@@ -3,8 +3,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Compare Images &amp; Videos Side by Side</title>
-<meta name="description" content="Drag and drop images or videos to compare them side by side. Split, slider, peek views. Synced video playback. Free, private, no uploads.">
+<title>Compare</title>
+<meta name="description" content="Compare">
 <meta name="robots" content="index, follow">
 <link rel="canonical">
 <link rel="manifest" href="manifest.json">
@@ -15,13 +15,13 @@
 <link rel="icon" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Compare Images &amp; Videos Side by Side">
-<meta property="og:description" content="Drag and drop images or videos to compare them side by side. Split, slider, peek views. Synced video playback. Free and private.">
+<meta property="og:title" content="Compare">
+<meta property="og:description" content="Compare">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Compare Images &amp; Videos Side by Side">
-<meta name="twitter:description" content="Drag and drop images or videos to compare them side by side. Free, private, no uploads.">
+<meta name="twitter:title" content="Compare">
+<meta name="twitter:description" content="Compare">
 <style>
 /* System font stack replaces self-hosted Inter (not available locally) */
 :root { --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
@@ -2111,7 +2111,7 @@ function loadMediaAt(idx, file) {
   const fileIsVideo = isVideoFile(file);
 
   if (mediaMode && ((fileIsVideo && mediaMode !== 'video') || (!fileIsVideo && mediaMode !== 'image'))) {
-    showToast('Cannot mix images and videos. Reload to switch.');
+    showToast('No mixing. Reload to switch.');
     return;
   }
 
@@ -2183,7 +2183,7 @@ function loadMediaFromUrl(idx, url) {
   const urlIsVideo = isVideoFile({ name, type: '' });
 
   if (mediaMode && ((urlIsVideo && mediaMode !== 'video') || (!urlIsVideo && mediaMode !== 'image'))) {
-    showToast('Cannot mix images and videos. Reload to switch.');
+    showToast('No mixing. Reload to switch.');
     return;
   }
 
