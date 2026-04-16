@@ -205,6 +205,22 @@ body.is-app .compare-wrap { height: calc(100% - 40px); margin-top: 40px; }
 .swap-zone:hover svg { opacity: 1; color: #fff; }
 .swap-zone:active svg { transform: scale(.9); }
 
+/* ── Nav tap zones (pair navigation on touch) ───────────────── */
+.nav-zone {
+  display: none;
+  position: absolute; bottom: 0; z-index: 20;
+  width: 40%; height: 80px;
+  align-items: flex-end; justify-content: center; padding-bottom: .75rem;
+  pointer-events: auto;
+}
+.nav-zone svg {
+  width: 28px; height: 28px; stroke: #fff; stroke-width: 2;
+  fill: none; opacity: .15; transition: opacity .15s;
+}
+.nav-zone.flash svg { opacity: .5; }
+.nav-zone-prev { left: 0; }
+.nav-zone-next { right: 0; }
+
 /* ── 2-image: Split ────────────────────────────────────────── */
 .view-split .panel { flex: 1; }
 .view-split::after { content:''; position:absolute; top:0; bottom:0; left:50%; width:1px; background:var(--border); z-index:5; pointer-events:none; }
@@ -1941,7 +1957,14 @@ X.B(E,Y);return E}return J}())
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 10 12 4 18 10"></polyline><polyline points="6 14 12 20 18 14"></polyline></svg>
         </div>
       </div>
-    <div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div></div>
+    <div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div>
+      <div class="nav-zone nav-zone-prev" id="navZonePrev">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="nav-zone nav-zone-next" id="navZoneNext">
+        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </div>
+    </div>
 
     <div class="zoom-pill" id="zoomPill">100%</div>
     <div class="help-toast" id="helpToast">Drop image or video to compare.</div>
@@ -3316,7 +3339,29 @@ function updateFolderNav() {
   pc.textContent = show ? (currentPairIdx + 1) + ' / ' + folderPairs.length : '';
   // Hide + button while any folder is loaded
   $('#btnAdd').classList.toggle('hidden', folderMode);
+  // Bottom-corner tap zones
+  const zoneDisplay = show ? 'flex' : 'none';
+  $('#navZonePrev').style.display = zoneDisplay;
+  $('#navZoneNext').style.display = zoneDisplay;
 }
+
+// ── Bottom-corner tap zones for pair navigation (touch) ────────
+['navZonePrev', 'navZoneNext'].forEach((id, i) => {
+  const el = $('#' + id);
+  let tapStartX, tapStartY;
+  el.addEventListener('touchstart', e => {
+    tapStartX = e.touches[0].clientX;
+    tapStartY = e.touches[0].clientY;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tapStartX;
+    const dy = e.changedTouches[0].clientY - tapStartY;
+    if (Math.hypot(dx, dy) > 10 || pinchDist) return;
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 150);
+    loadPair(currentPairIdx + (i === 0 ? -1 : 1));
+  }, { passive: true });
+});
 
 async function setFolderSide(sideIdx, files, dirName) {
   const imgs = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
