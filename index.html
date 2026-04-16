@@ -37,7 +37,7 @@ body { font-family: var(--font); }
   --text-muted: #8a8a96;
   --accent: #4b8cff;
   --slider-pct: 50%;
-  --slider-pct-v: 50%;
+  --slider-pct-v: 15%;
   --img-scale: 1;
   --img-tx: 0px;
   --img-ty: 0px;
@@ -2386,6 +2386,7 @@ function setView(v) {
   if (hadLabels) box.classList.add('labels-visible');
   box.dataset.count = Math.max(imageCount, 2);
   $$('[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === v));
+  if (v === 'slider-v') box.style.setProperty('--slider-pct-v', '15%');
   sizeImages();
   requestAnimationFrame(positionSwapZones);
 
