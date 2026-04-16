@@ -532,6 +532,17 @@ body.embed-mode .embed-badge { display: block; }
 .folder-strip { display: none; }
 
 
+/* ── Slider-v animation duration control ───────────────────── */
+.tb-anim-dur {
+  display: flex; align-items: center; gap: 1px;
+}
+.tb-anim-dur.hidden { display: none; }
+.tb-anim-dur .tb-dur-val {
+  font-size: .72rem; color: rgba(255,255,255,.65);
+  min-width: 34px; text-align: center; user-select: none;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+
 /* ── Folder pair count in toolbar ──────────────────────────── */
 .tb-pair-count {
   font-size: .72rem; color: var(--text-muted); white-space: nowrap;
@@ -1809,6 +1820,15 @@ X.B(E,Y);return E}return J}())
       <button class="tb-btn" data-view="slider-v" data-mode="two" title="Slider (1)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="12" x2="21" y2="12"></line><polyline points="10 8 12 6 14 8"></polyline><polyline points="10 16 12 18 14 16"></polyline></svg>
       </button>
+      <div class="tb-anim-dur hidden" id="animDurControl">
+        <button class="tb-btn" id="btnDurDec" title="Decrease duration">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <span class="tb-dur-val" id="animDurVal">5.0s</span>
+        <button class="tb-btn" id="btnDurInc" title="Increase duration">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+      </div>
       <button class="tb-btn" data-view="slider" data-mode="two" title="Slider (2)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line><polyline points="8 10 6 12 8 14"></polyline><polyline points="16 10 18 12 16 14"></polyline></svg>
       </button>
@@ -2386,6 +2406,7 @@ function setView(v) {
   if (hadLabels) box.classList.add('labels-visible');
   box.dataset.count = Math.max(imageCount, 2);
   $$('[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === v));
+  $('#animDurControl').classList.toggle('hidden', v !== 'slider-v');
   cancelSliderVAnim();
   box.style.setProperty('--slider-pct-v', '10%');
   sizeImages();
@@ -2861,6 +2882,17 @@ let sliderVDragging = false;
 let sliderVAnimId = null;
 let pendingSliderVAnim = false;
 
+const animDurValEl = $('#animDurVal');
+let sliderVDuration = Math.round((parseFloat(localStorage.getItem('tl-slider-v-dur')) || 5) * 10) / 10;
+function setSliderVDuration(s) {
+  sliderVDuration = Math.max(0.5, Math.round(s * 10) / 10);
+  localStorage.setItem('tl-slider-v-dur', sliderVDuration);
+  animDurValEl.textContent = sliderVDuration.toFixed(1) + 's';
+}
+setSliderVDuration(sliderVDuration);
+$('#btnDurDec').addEventListener('click', () => setSliderVDuration(sliderVDuration - 0.5));
+$('#btnDurInc').addEventListener('click', () => setSliderVDuration(sliderVDuration + 0.5));
+
 function cancelSliderVAnim() {
   if (sliderVAnimId) { cancelAnimationFrame(sliderVAnimId); sliderVAnimId = null; }
   pendingSliderVAnim = false;
@@ -2872,7 +2904,7 @@ function animateSliderV() {
   const imageH = (activeMedia(slots[0]).offsetHeight || activeMedia(slots[1]).offsetHeight) || 0;
   const from = imageH ? (containerH - imageH) / 2 / containerH * 100 : 10;
   const to   = imageH ? (containerH + imageH) / 2 / containerH * 100 : 90;
-  const start = performance.now(), duration = 3500;
+  const start = performance.now(), duration = sliderVDuration * 1000;
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
     const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
