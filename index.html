@@ -2990,7 +2990,15 @@ function tdist(t) {
 }
 
 wrap.addEventListener('touchstart', e => {
-  if (panZoomLocked) return;
+  if (panZoomLocked) {
+    if (view === 'slider-v' && e.touches.length === 1 &&
+        !e.target.closest('.slider-handle-v, .toolbar, .upload-btn, .empty-state, .swap-zone, .menu-panel, .nav-zone')) {
+      touchPan = true;
+      touchStartX = touchX = e.touches[0].clientX;
+      touchStartY = touchY = e.touches[0].clientY;
+    }
+    return;
+  }
   if (e.touches.length === 2) {
     touchPan = false;
     pinchDist = tdist(e.touches);
@@ -3050,10 +3058,13 @@ wrap.addEventListener('touchend', e => {
   const dtx = t.clientX - lastTapX, dty = t.clientY - lastTapY;
   const nearSameSpot = Math.hypot(dtx, dty) < 40;
   if (now - lastTapTime < 300 && nearSameSpot) {
-    // Double-tap: reset to fit
-    resetTransform(); sizeImages(); showZoom(1);
-    $('#btnFit').classList.add('active');
-    $('#btnActual').classList.remove('active');
+    if (panZoomLocked && view === 'slider-v') {
+      animateSliderV();
+    } else {
+      resetTransform(); sizeImages(); showZoom(1);
+      $('#btnFit').classList.add('active');
+      $('#btnActual').classList.remove('active');
+    }
     lastTapTime = 0;
   } else {
     lastTapTime = now;
