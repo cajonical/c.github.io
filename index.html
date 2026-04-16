@@ -249,14 +249,6 @@ body.is-app .compare-wrap { height: calc(100% - 40px); margin-top: 40px; }
 }
 .slider-handle:hover .slider-line,
 .slider-handle.active .slider-line { opacity: 1; width: 3px; }
-.slider-thumb {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 34px; height: 34px; background: #fff; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,.5); cursor: ew-resize;
-}
-.slider-thumb svg { width: 16px; height: 16px; color: #333; }
-
 /* ── 2-image: Slider (top/down) ───────────────────────────── */
 .view-slider-v .panel { position: absolute; inset: 0; }
 .view-slider-v .panel:first-child {
@@ -281,14 +273,6 @@ body.is-app .compare-wrap { height: calc(100% - 40px); margin-top: 40px; }
 }
 .slider-handle-v:hover .slider-line-v,
 .slider-handle-v.active .slider-line-v { opacity: 1; height: 3px; }
-.slider-thumb-v {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 34px; height: 34px; background: #fff; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,.5); cursor: ns-resize;
-}
-.slider-thumb-v svg { width: 16px; height: 16px; color: #333; }
-
 /* ── 2-image: Peek ─────────────────────────────────────────── */
 .view-peek .panel { position: absolute; inset: 0; }
 .view-peek .panel:first-child { z-index: 1; }
@@ -1967,15 +1951,9 @@ X.B(E,Y);return E}return J}())
 
       <div class="slider-handle" id="sliderHandle">
         <div class="slider-line"></div>
-        <div class="slider-thumb">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 4l-5 8 5 8"></path><path d="M16 4l5 8-5 8"></path></svg>
-        </div>
       </div>
       <div class="slider-handle-v" id="sliderHandleV">
         <div class="slider-line-v"></div>
-        <div class="slider-thumb-v">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 10 12 4 18 10"></polyline><polyline points="6 14 12 20 18 14"></polyline></svg>
-        </div>
       </div>
     <div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div><div class="swap-zone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 5h18"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 19H3"></path></svg></div>
       <div class="nav-zone nav-zone-prev" id="navZonePrev">
