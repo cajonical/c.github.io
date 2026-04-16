@@ -2419,8 +2419,9 @@ function sizeImages() {
     if (!rect.width || !rect.height) return;
 
     const panelFit = Math.min(rect.width / anchorW, rect.height / anchorH, 1);
-    const displayW = Math.round(nativeW(slot) * panelFit);
-    const displayH = Math.round(nativeH(slot) * panelFit);
+    const imageScale = Math.min(anchorW / nativeW(slot), anchorH / nativeH(slot)) * panelFit;
+    const displayW = Math.round(nativeW(slot) * imageScale);
+    const displayH = Math.round(nativeH(slot) * imageScale);
 
     const el = activeMedia(slot);
     el.style.width = displayW + 'px';
