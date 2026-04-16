@@ -2433,6 +2433,11 @@ function sizeImages() {
 
     fitScale = panelFit;
   });
+
+  if (pendingSliderVAnim && view === 'slider-v') {
+    pendingSliderVAnim = false;
+    animateSliderV();
+  }
 }
 
 window.addEventListener('resize', () => { sizeImages(); positionSwapZones(); });
@@ -2854,9 +2859,11 @@ function updateSliderX(clientX) {
 // ── Vertical Slider drag ──────────────────────────────────────
 let sliderVDragging = false;
 let sliderVAnimId = null;
+let pendingSliderVAnim = false;
 
 function cancelSliderVAnim() {
   if (sliderVAnimId) { cancelAnimationFrame(sliderVAnimId); sliderVAnimId = null; }
+  pendingSliderVAnim = false;
 }
 
 function animateSliderV() {
@@ -3352,7 +3359,7 @@ function loadPair(idx) {
       if (folderSides[side]) slots[side].labelInput.value = folderSides[side].name + '/' + f.name;
     }
   });
-  if (view === 'slider-v') animateSliderV();
+  if (view === 'slider-v') { cancelSliderVAnim(); pendingSliderVAnim = true; box.style.setProperty('--slider-pct-v', '10%'); }
   else box.style.setProperty('--slider-pct-v', '10%');
   updateFolderNav();
 }
