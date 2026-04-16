@@ -4107,11 +4107,11 @@ if (new URLSearchParams(location.search).has('embed')) {
   function setAutoHide(on) {
     document.body.classList.toggle('toolbar-autohide', on);
     autoHideCheck.classList.toggle('on', on);
-    localStorage.setItem('tl-toolbar-autohide', on ? '1' : '');
+    localStorage.setItem('tl-toolbar-autohide', on ? '1' : '0');
   }
 
-  // restore from localStorage
-  if (localStorage.getItem('tl-toolbar-autohide') === '1') setAutoHide(true);
+  // restore from localStorage — default ON
+  setAutoHide(localStorage.getItem('tl-toolbar-autohide') !== '0');
 
   autoHideBtn.addEventListener('click', () => {
     setAutoHide(!document.body.classList.contains('toolbar-autohide'));
@@ -4124,11 +4124,12 @@ if (new URLSearchParams(location.search).has('embed')) {
   function setLockPanZoom(on) {
     panZoomLocked = on;
     lockPanZoomCheck.classList.toggle('on', on);
-    localStorage.setItem('tl-lock-pan-zoom', on ? '1' : '');
+    localStorage.setItem('tl-lock-pan-zoom', on ? '1' : '0');
     if (on) { resetTransform(); sizeImages(); }
   }
 
-  if (localStorage.getItem('tl-lock-pan-zoom') === '1') setLockPanZoom(true);
+  // restore from localStorage — default ON
+  setLockPanZoom(localStorage.getItem('tl-lock-pan-zoom') !== '0');
 
   lockPanZoomBtn.addEventListener('click', () => {
     setLockPanZoom(!panZoomLocked);
