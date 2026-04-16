@@ -2861,8 +2861,11 @@ function cancelSliderVAnim() {
 
 function animateSliderV() {
   cancelSliderVAnim();
-  const start = performance.now();
-  const from = 10, to = 90, duration = 3500;
+  const containerH = box.getBoundingClientRect().height;
+  const imageH = (activeMedia(slots[0]).offsetHeight || activeMedia(slots[1]).offsetHeight) || 0;
+  const from = imageH ? (containerH - imageH) / 2 / containerH * 100 : 10;
+  const to   = imageH ? (containerH + imageH) / 2 / containerH * 100 : 90;
+  const start = performance.now(), duration = 3500;
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
     const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
