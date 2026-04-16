@@ -2883,7 +2883,7 @@ function updateSliderY(clientY) {
 
 // ── Peek ──────────────────────────────────────────────────────
 wrap.addEventListener('pointerdown', e => {
-  if (view === 'peek' && !e.target.closest('.toolbar, .panel-label, .upload-btn, .empty-state, .menu-panel, .details-panel'))
+  if (view === 'peek' && !e.target.closest('.toolbar, .panel-label, .upload-btn, .empty-state, .menu-panel, .details-panel, .nav-zone'))
     box.classList.add('peeking');
 });
 wrap.addEventListener('pointerup', () => { if (view === 'peek') box.classList.remove('peeking'); });
