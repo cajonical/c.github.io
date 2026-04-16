@@ -2386,7 +2386,8 @@ function setView(v) {
   if (hadLabels) box.classList.add('labels-visible');
   box.dataset.count = Math.max(imageCount, 2);
   $$('[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === v));
-  if (v === 'slider-v') box.style.setProperty('--slider-pct-v', '10%');
+  cancelSliderVAnim();
+  box.style.setProperty('--slider-pct-v', '10%');
   sizeImages();
   requestAnimationFrame(positionSwapZones);
 
@@ -2852,9 +2853,29 @@ function updateSliderX(clientX) {
 
 // ── Vertical Slider drag ──────────────────────────────────────
 let sliderVDragging = false;
+let sliderVAnimId = null;
+
+function cancelSliderVAnim() {
+  if (sliderVAnimId) { cancelAnimationFrame(sliderVAnimId); sliderVAnimId = null; }
+}
+
+function animateSliderV() {
+  cancelSliderVAnim();
+  const start = performance.now();
+  const from = 10, to = 90, duration = 3500;
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+    box.style.setProperty('--slider-pct-v', (from + (to - from) * ease) + '%');
+    if (t < 1) sliderVAnimId = requestAnimationFrame(step);
+    else sliderVAnimId = null;
+  }
+  sliderVAnimId = requestAnimationFrame(step);
+}
 
 sliderHandleV.addEventListener('mousedown', e => {
   e.stopPropagation();
+  cancelSliderVAnim();
   sliderVDragging = true;
   sliderHandleV.classList.add('active');
   updateSliderY(e.clientY);
@@ -2865,6 +2886,7 @@ window.addEventListener('mouseup', () => {
 });
 sliderHandleV.addEventListener('touchstart', e => {
   e.stopPropagation();
+  cancelSliderVAnim();
   sliderVDragging = true;
   sliderHandleV.classList.add('active');
   updateSliderY(e.touches[0].clientY);
@@ -3327,7 +3349,8 @@ function loadPair(idx) {
       if (folderSides[side]) slots[side].labelInput.value = folderSides[side].name + '/' + f.name;
     }
   });
-  requestAnimationFrame(() => box.style.setProperty('--slider-pct-v', '10%'));
+  if (view === 'slider-v') animateSliderV();
+  else box.style.setProperty('--slider-pct-v', '10%');
   updateFolderNav();
 }
 
