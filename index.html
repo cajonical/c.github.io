@@ -220,6 +220,9 @@ body.is-app .compare-wrap { height: calc(100% - 40px); margin-top: 40px; }
 .nav-zone.flash svg { opacity: .5; }
 .nav-zone-prev { left: 0; }
 .nav-zone-next { right: 0; }
+.nav-zone-center {
+  left: 50%; transform: translateX(-50%); width: 12%; min-width: 70px;
+}
 
 /* ── 2-image: Split ────────────────────────────────────────── */
 .view-split .panel { flex: 1; }
@@ -1959,6 +1962,9 @@ X.B(E,Y);return E}return J}())
       <div class="nav-zone nav-zone-prev" id="navZonePrev">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </div>
+      <div class="nav-zone nav-zone-center" id="navZoneCenter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      </div>
       <div class="nav-zone nav-zone-next" id="navZoneNext">
         <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
       </div>
@@ -3059,13 +3065,7 @@ wrap.addEventListener('touchend', e => {
   const dtx = t.clientX - lastTapX, dty = t.clientY - lastTapY;
   const nearSameSpot = Math.hypot(dtx, dty) < 40;
   if (now - lastTapTime < 300 && nearSameSpot) {
-    if (panZoomLocked && view === 'slider-v') {
-      animateSliderV();
-    } else {
-      resetTransform(); sizeImages(); showZoom(1);
-      $('#btnFit').classList.add('active');
-      $('#btnActual').classList.remove('active');
-    }
+    // Double-tap detected — repurpose logic here
     lastTapTime = 0;
   } else {
     lastTapTime = now;
@@ -3398,9 +3398,10 @@ function updateFolderNav() {
   pc.textContent = show ? (currentPairIdx + 1) + ' / ' + folderPairs.length : '';
   // Hide + button while any folder is loaded
   $('#btnAdd').classList.toggle('hidden', folderMode);
-  // Bottom-corner tap zones
+  // Bottom-center and corner tap zones
   const zoneDisplay = show ? 'flex' : 'none';
   $('#navZonePrev').style.display = zoneDisplay;
+  $('#navZoneCenter').style.display = zoneDisplay;
   $('#navZoneNext').style.display = zoneDisplay;
 }
 
@@ -3421,6 +3422,30 @@ function updateFolderNav() {
     loadPair(currentPairIdx + (i === 0 ? -1 : 1));
   }, { passive: true });
 });
+
+// ── Center-bottom tap zone: reset zoom / animate slider-v ──────
+(function () {
+  const el = document.getElementById('navZoneCenter');
+  let tapStartX, tapStartY;
+  el.addEventListener('touchstart', e => {
+    tapStartX = e.touches[0].clientX;
+    tapStartY = e.touches[0].clientY;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tapStartX;
+    const dy = e.changedTouches[0].clientY - tapStartY;
+    if (Math.hypot(dx, dy) > 10 || pinchDist) return;
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 150);
+    if (panZoomLocked && view === 'slider-v') {
+      animateSliderV();
+    } else {
+      resetTransform(); sizeImages(); showZoom(1);
+      $('#btnFit').classList.add('active');
+      $('#btnActual').classList.remove('active');
+    }
+  }, { passive: true });
+})();
 
 async function setFolderSide(sideIdx, files, dirName) {
   const imgs = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
