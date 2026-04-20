@@ -15,6 +15,7 @@ const overlay = $('#dropOverlay');
 const zoomPill = $('#zoomPill');
 const toast = $('#helpToast');
 const detPanel = $('#detPanel');
+const privacyFilter = $('#privacyFilter') || (() => { const el = document.createElement('div'); el.id = 'privacyFilter'; el.className = 'privacy-filter'; document.body.appendChild(el); return el; })();
 
 const panels = [...$$('.panel')];
 const MAX_IMAGES = 4;
@@ -53,6 +54,7 @@ let zoomTid = null;
 let fitScale = 1;
 let panZoomLocked = false;
 let isPlaying = false;
+let privacyFilterActive = false;
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(v, hi)); }
 
@@ -1040,7 +1042,8 @@ wrap.addEventListener('touchend', e => {
   const dtx = t.clientX - lastTapX, dty = t.clientY - lastTapY;
   const nearSameSpot = Math.hypot(dtx, dty) < 40;
   if (now - lastTapTime < 300 && nearSameSpot) {
-    // Double-tap detected — repurpose logic here
+    privacyFilterActive = !privacyFilterActive;
+    privacyFilter.classList.toggle('active', privacyFilterActive);
     lastTapTime = 0;
   } else {
     lastTapTime = now;
