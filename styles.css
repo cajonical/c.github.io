@@ -577,7 +577,7 @@ body.embed-mode .embed-badge { display: block; }
   body:not(.is-app) .toolbar {
     gap: .15rem; padding: .25rem;
     max-width: calc(100vw - 1.5rem);
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
   }
   .tb-btn { padding: 0 .45rem; height: 28px; font-size: .7rem; min-width: 28px; }
   .tb-btn span { display: none; }
