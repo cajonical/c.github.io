@@ -1521,7 +1521,7 @@ function showGallery() {
   folderPairs.forEach((pair, idx) => {
     const el = document.createElement('div');
     el.className = 'pg-pair' + (idx === currentPairIdx ? ' active' : '');
-    const primaryFile = pair.left || pair.right;
+    const primaryFile = pair.right || pair.left;
 
     const wrap = makeThumbWrap(primaryFile);
     el.appendChild(wrap);
