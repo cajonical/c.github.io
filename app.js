@@ -19,12 +19,6 @@ const detPanel = $('#detPanel');
 const panels = [...$$('.panel')];
 const MAX_IMAGES = 4;
 
-// ── Default folders (edit to change paths; set to '' to disable) ──
-const DEFAULT_FOLDERS = [
-  '/home/user/Documents/data training/Twinlens/generated',  // left panel  (symlink → /media/veracrypt1/.../output/Phr00t/generated)
-  '/home/user/Documents/data training/Twinlens/original',   // right panel (symlink → /media/veracrypt1/.../output/Phr00t/original)
-];
-
 // ── State ─────────────────────────────────────────────────────
 const slots = panels.map((panel, i) => ({
   panel,
@@ -1881,62 +1875,6 @@ if (window.electronAPI) {
   };
   window.electronAPI.onMenuAction(action => { if (menuMap[action]) menuMap[action](); });
 }
-
-// ── Auto-load default folders on startup ─────────────────────
-(async function loadDefaultFolders() {
-  if (!DEFAULT_FOLDERS.length || DEFAULT_FOLDERS.every(p => !p)) return;
-  if (slots[0].file || slots[1].file) return; // user already loaded something
-
-  const IMAGE_EXT = /\.(jpe?g|png|gif|webp|avif|bmp|heic|heif|tiff?)$/i;
-
-  async function fetchFile(filePath) {
-    const r = await fetch('file://' + filePath);
-    const blob = await r.blob();
-    const name = filePath.split('/').pop();
-    return new File([blob], name, { type: blob.type });
-  }
-
-  async function readDirViaFetch(dirPath) {
-    // Works with Firefox's file:// directory listing; also tried if electronAPI.readDir absent.
-    const resp = await fetch('file://' + dirPath + '/');
-    const html = await resp.text();
-    return [...html.matchAll(/href="([^"?#/][^"?#]*)"/g)]
-      .map(m => decodeURIComponent(m[1]))
-      .filter(n => IMAGE_EXT.test(n));
-  }
-
-  const loaded = [false, false];
-
-  for (let i = 0; i < Math.min(DEFAULT_FOLDERS.length, 2); i++) {
-    const dirPath = DEFAULT_FOLDERS[i] && DEFAULT_FOLDERS[i].replace(/\/$/, '');
-    if (!dirPath) continue;
-
-    try {
-      let names;
-
-      if (window.electronAPI && typeof window.electronAPI.readDir === 'function') {
-        // Electron preload exposes readDir(path) → string[]
-        names = (await window.electronAPI.readDir(dirPath)).filter(n => IMAGE_EXT.test(n));
-      } else {
-        names = await readDirViaFetch(dirPath);
-      }
-
-      if (!names.length) continue;
-      names.sort();
-
-      const results = await Promise.allSettled(
-        names.map(name => fetchFile(dirPath + '/' + name))
-      );
-      const files = results.filter(r => r.status === 'fulfilled').map(r => r.value);
-      if (!files.length) continue;
-
-      await setFolderSide(i, files, dirPath.split('/').pop());
-      loaded[i] = true;
-    } catch (e) {
-      console.log('Could not auto-load folder:', dirPath, e.message);
-    }
-  }
-})();
 
 // ── Embed mode ───────────────────────────────────────────────
 if (new URLSearchParams(location.search).has('embed')) {
