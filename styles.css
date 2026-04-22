@@ -2,7 +2,6 @@
 :root { --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
 body { font-family: var(--font); }
 
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -57,13 +56,6 @@ body.is-app .titlebar { display: flex; }
 .drop-overlay.dragover .drop-overlay-label {
   border-color: var(--accent); color: var(--accent);
 }
-
-/* ── Privacy filter ────────────────────────────────────────── */
-.privacy-filter {
-  position: fixed; inset: 0; z-index: 5000;
-  background: #000; display: none; pointer-events: auto;
-}
-.privacy-filter.active { display: block; }
 
 /* ── Compare area ──────────────────────────────────────────── */
 .compare-wrap {
