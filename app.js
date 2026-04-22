@@ -855,9 +855,12 @@ function cancelSliderVAnim() {
 function animateSliderV() {
   cancelSliderVAnim();
   const containerH = box.getBoundingClientRect().height;
-  const imageH = (activeMedia(slots[0]).offsetHeight || activeMedia(slots[1]).offsetHeight) || 0;
-  const from = imageH ? (containerH - imageH) / 2 / containerH * 100 : 10;
-  const to   = imageH ? (containerH + imageH) / 2 / containerH * 100 : 90;
+  const imageH = Math.max(
+    activeMedia(slots[0]).offsetHeight || 0,
+    activeMedia(slots[1]).offsetHeight || 0
+  );
+  const from = imageH ? (containerH - imageH) / 2 / containerH * 100 : 5;
+  const to   = imageH ? (containerH + imageH) / 2 / containerH * 100 : 95;
   const start = performance.now(), duration = sliderVDuration * 1000;
   function step(now) {
     const t = Math.min((now - start) / duration, 1);
