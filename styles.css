@@ -592,3 +592,11 @@ body.embed-mode .embed-badge { display: block; }
   .tb-seek { width: 80px; }
   .tb-time { font-size: .6rem; }
 }
+
+.privacy-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #000;
+  display: none;
+  pointer-events: none;
+}
+.privacy-overlay.active { display: block; pointer-events: auto; }

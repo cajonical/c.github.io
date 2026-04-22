@@ -965,13 +965,27 @@ window.addEventListener('mouseup', () => { dragging = false; wrap.classList.remo
 let pinchDist = null, pinchScale = null, pinchX = null, pinchY = null;
 let touchPan = false, touchX = 0, touchY = 0, touchStartX = 0, touchStartY = 0;
 let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
+let privacyFilterActive = false;
 
 function tdist(t) {
   const dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
   return Math.sqrt(dx*dx + dy*dy);
 }
 
+function togglePrivacy() {
+  privacyFilterActive = !privacyFilterActive;
+  $('#privacyOverlay').classList.toggle('active', privacyFilterActive);
+}
+
 wrap.addEventListener('touchstart', e => {
+  if (privacyFilterActive) {
+    if (e.touches.length === 1) {
+      touchPan = true;
+      touchStartX = touchX = e.touches[0].clientX;
+      touchStartY = touchY = e.touches[0].clientY;
+    }
+    return;
+  }
   if (panZoomLocked) {
     if (view === 'slider-v' && e.touches.length === 1 &&
         !e.target.closest('.slider-handle-v, .toolbar, .upload-btn, .empty-state, .swap-zone, .menu-panel, .nav-zone')) {
@@ -996,6 +1010,7 @@ wrap.addEventListener('touchstart', e => {
 }, { passive: true });
 
 wrap.addEventListener('touchmove', e => {
+  if (privacyFilterActive) return;
   if (panZoomLocked) return;
   if (e.touches.length >= 2 && pinchDist) {
     touchPan = false;
@@ -1040,7 +1055,7 @@ wrap.addEventListener('touchend', e => {
   const dtx = t.clientX - lastTapX, dty = t.clientY - lastTapY;
   const nearSameSpot = Math.hypot(dtx, dty) < 40;
   if (now - lastTapTime < 300 && nearSameSpot) {
-    // Double-tap detected — repurpose logic here
+    togglePrivacy();
     lastTapTime = 0;
   } else {
     lastTapTime = now;
