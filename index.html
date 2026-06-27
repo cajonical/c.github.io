@@ -252,6 +252,16 @@
 
 <script src="vendor.js"></script>
 
+<!-- zip.js (unminified full build) — reads encrypted ZIPs (AES-256 / ZipCrypto) -->
+<script src="zip-full.js"></script>
+<script>
+  // ── Password for opening encrypted ZIP folders ───────────────────────────
+  // Set this to the password used when creating the encrypted .zip files.
+  // Leave as '' to open only unencrypted zips. (This is intentionally in
+  // plain HTML — acceptable for this private, local use case.)
+  window.ZIP_PASSWORD = 'kulgHBQ@RT38TN:P()#@!nP)(*GH';
+</script>
+
 <script src="app.js"></script>
 
 <!-- (analytics removed) -->

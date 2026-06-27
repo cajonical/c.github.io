@@ -1152,7 +1152,7 @@ slots.forEach((slot, i) => {
       const side = i <= 1 ? i : (folderSides[0] ? 1 : 0);
       extractZip(raw[0])
         .then(({ files, name }) => setFolderSide(side, files, name))
-        .catch(() => showToast('Could not read ZIP file'));
+        .catch(err => showToast(err?.message || 'Could not read ZIP file'));
       return;
     }
     // How many slots are available from this panel onwards
@@ -1256,28 +1256,94 @@ function readAllFromDirEntry(rootEntry) {
 }
 
 // ── ZIP extraction (for iOS: zip a folder, then select/drop the .zip) ────
-async function extractZip(zipFile) {
-  const zip = await new JSZip().loadAsync(zipFile);
+// Uses zip.js (global `zip`, from zip-full.js). Unlike JSZip it can read
+// encrypted archives (AES-256 / ZipCrypto). The password is read from
+// window.ZIP_PASSWORD (hardcoded in index.html). Unencrypted zips also work —
+// zip.js only applies the password to entries that are actually encrypted.
+//
+// Decryption is CPU-heavy (pure-JS AES), so we let zip.js use Web Workers (its
+// default): decoding runs off the main thread and in parallel across cores,
+// which avoids freezing the UI and is much faster — important on mobile.
+// Workers are built inline from a Blob URL (no extra files; works on HTTPS).
+// If worker creation ever fails (e.g. some file:// contexts), we transparently
+// fall back to single-threaded decoding.
+let _zipConfigured = false;
+let _zipUseWorkers = true;
+let _zipWorkerProven = false;
+
+async function readZipEntries(zipFile) {
   const MIME = { jpg:'image/jpeg', jpeg:'image/jpeg', png:'image/png', gif:'image/gif',
                  webp:'image/webp', avif:'image/avif', bmp:'image/bmp', svg:'image/svg+xml',
                  heic:'image/heic', heif:'image/heif', tiff:'image/tiff', tif:'image/tiff' };
-  const files = [];
-  const promises = [];
-  zip.forEach((path, entry) => {
-    if (entry.dir) return;
-    // Skip macOS metadata and hidden files
-    if (path.startsWith('__MACOSX/') || /\/\./.test(path) || path.startsWith('.')) return;
-    const name = path.split('/').pop();
-    if (!isImageFile({ name, type: '' })) return;
-    const ext = name.split('.').pop().toLowerCase();
-    promises.push(
-      entry.async('blob').then(blob =>
-        files.push(new File([blob], name, { type: MIME[ext] || 'application/octet-stream' }))
-      )
-    );
+  const reader = new zip.ZipReader(new zip.BlobReader(zipFile), {
+    password: window.ZIP_PASSWORD || undefined,
   });
-  await Promise.all(promises);
-  return { files, name: zipFile.name.replace(/\.zip$/i, '') };
+  try {
+    const entries = await reader.getEntries();
+    // Select the image entries up front, skipping dirs / macOS junk / hidden files.
+    const wanted = [];
+    for (const entry of entries) {
+      if (entry.directory) continue;
+      const path = entry.filename;
+      if (path.startsWith('__MACOSX/') || /\/\./.test(path) || path.startsWith('.')) continue;
+      const name = path.split('/').pop();
+      if (!isImageFile({ name, type: '' })) continue;
+      const ext = name.split('.').pop().toLowerCase();
+      wanted.push({ entry, name, type: MIME[ext] || 'application/octet-stream' });
+    }
+    // Decrypt concurrently so zip.js spreads the (CPU-heavy, pure-JS AES) work
+    // across its Web Worker pool instead of one entry at a time — otherwise only a
+    // single worker is ever busy and decoding runs at single-core speed.
+    //
+    // iOS Safari: decryption is deterministic & independent per entry, so results
+    // are byte-identical regardless of concurrency. We scale the in-flight count to
+    // the core count (navigator.hardwareConcurrency is supported on iOS; ||4 covers
+    // old versions) and cap it at 8 so memory stays modest on phones — the extra
+    // in-flight memory is only (cores × one image), small next to the images we keep
+    // anyway. When workers aren't active (fallback path), we go strictly sequential,
+    // exactly like the original single-threaded behaviour.
+    const files = new Array(wanted.length);
+    const limit = _zipUseWorkers ? Math.max(2, Math.min(navigator.hardwareConcurrency || 4, 8)) : 1;
+    let next = 0;
+    async function pump() {
+      while (next < wanted.length) {
+        const i = next++;
+        const { entry, name, type } = wanted[i];
+        const blob = await entry.getData(new zip.BlobWriter(type));
+        files[i] = new File([blob], name, { type });
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(limit, wanted.length) }, pump));
+    return files;
+  } finally {
+    await reader.close();
+  }
+}
+
+async function extractZip(zipFile) {
+  if (!_zipConfigured) {
+    zip.configure({ useWebWorkers: _zipUseWorkers });
+    _zipConfigured = true;
+  }
+  const finalize = files => ({ files, name: zipFile.name.replace(/\.zip$/i, '') });
+  try {
+    const files = await readZipEntries(zipFile);
+    if (_zipUseWorkers) _zipWorkerProven = true;
+    return finalize(files);
+  } catch (err) {
+    // Wrong/missing password — don't retry, report clearly.
+    if (/password/i.test(err?.message || '')) {
+      throw new Error('Wrong or missing ZIP password (check window.ZIP_PASSWORD)');
+    }
+    // Worker path failed and has never worked → retry once single-threaded.
+    if (_zipUseWorkers && !_zipWorkerProven) {
+      console.warn('zip.js Web Worker setup failed; falling back to single-threaded decoding.', err);
+      _zipUseWorkers = false;
+      zip.configure({ useWebWorkers: false });
+      return finalize(await readZipEntries(zipFile));
+    }
+    throw err;
+  }
 }
 
 let folderSides = [null, null];  // each: { name, files }
@@ -1603,7 +1669,7 @@ overlay.addEventListener('drop', async e => {
   if (droppedZip) {
     extractZip(droppedZip)
       .then(({ files, name }) => setFolderSide(folderSides[0] ? 1 : 0, files, name))
-      .catch(() => showToast('Could not read ZIP file'));
+      .catch(err => showToast(err?.message || 'Could not read ZIP file'));
     return;
   }
   normaliseFiles(e.dataTransfer.files).then(fs => addMedia(fs));
@@ -1636,7 +1702,7 @@ wrap.addEventListener('drop', async e => {
     const side = (targetIdx !== undefined && targetIdx <= 1) ? targetIdx : (folderSides[0] ? 1 : 0);
     extractZip(droppedZip)
       .then(({ files, name }) => setFolderSide(side, files, name))
-      .catch(() => showToast('Could not read ZIP file'));
+      .catch(err => showToast(err?.message || 'Could not read ZIP file'));
     return;
   }
   normaliseFiles(e.dataTransfer.files).then(fs => addMedia(fs, targetIdx));
